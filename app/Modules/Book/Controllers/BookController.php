@@ -5,6 +5,7 @@ namespace App\Modules\Book\Controllers;
 use App\Modules\Book\Interfaces\BookServiceInterface;
 use App\Modules\Book\Requests\StoreBookRequest;
 use App\Modules\Book\Resources\BookCollectionResource;
+use App\Modules\Book\Resources\BookResource;
 use App\Traits\ApiResponse;
 use Exception;
 use Illuminate\Http\Request;
@@ -34,7 +35,7 @@ class BookController
         try {
             $book = $this->bookService->store($request);
 
-            return $this->success('Book created successfully', $book);
+            return $this->success('Book created successfully', BookResource::make($book), 'item');
         } catch (Exception $e) {
             return $this->error('Failed to create book: '.$e->getMessage());
         }

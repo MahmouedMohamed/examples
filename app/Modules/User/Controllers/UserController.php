@@ -34,7 +34,7 @@ class UserController
         try {
             $user = $this->userService->store($request);
 
-            return $this->success('User created successfully', new UserResource($user));
+            return $this->success('User created successfully', new UserResource($user), 'item');
         } catch (Exception $e) {
             return $this->error('Failed to create user: '.$e->getMessage());
         }
@@ -43,7 +43,7 @@ class UserController
     public function show(User $user)
     {
         try {
-            return $this->success('User retrieved successfully', new UserResource($user));
+            return $this->success('User retrieved successfully', new UserResource($user), 'item');
         } catch (Exception $e) {
             return $this->error('User not found', 404);
         }
@@ -54,7 +54,7 @@ class UserController
         try {
             $user = $this->userService->update($request, $user);
 
-            return $this->success('User updated successfully', new UserResource($user));
+            return $this->success('User updated successfully', new UserResource($user), 'item');
         } catch (Exception $e) {
             return $this->error('Failed to update user: '.$e->getMessage());
         }
@@ -65,7 +65,7 @@ class UserController
         try {
             $this->userService->destroy($user);
 
-            return $this->success('User deleted successfully');
+            return $this->success('User deleted successfully', [], 'item');
         } catch (Exception $e) {
             return $this->error('Failed to delete user: '.$e->getMessage());
         }
@@ -76,7 +76,7 @@ class UserController
         try {
             $user = $this->userService->activate($user);
 
-            return $this->success('User activated successfully', new UserResource($user));
+            return $this->success('User activated successfully', new UserResource($user), 'item');
         } catch (Exception $e) {
             return $this->error('Failed to activate user: '.$e->getMessage());
         }
@@ -87,7 +87,7 @@ class UserController
         try {
             $user = $this->userService->deactivate($user);
 
-            return $this->success('User deactivated successfully', new UserResource($user));
+            return $this->success('User deactivated successfully', new UserResource($user), 'item');
         } catch (Exception $e) {
             return $this->error('Failed to deactivate user: '.$e->getMessage());
         }
