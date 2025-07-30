@@ -74,6 +74,7 @@ jobs:
 
       - name: Start MongoDB replica set
         run: |
+          # 1) Launch the container with your mongod flags
           docker run -d --name mongo-test \
             -p 27017:27017 \
             mongo:5 \
@@ -81,9 +82,13 @@ jobs:
             --bind_ip_all \
             --oplogSize=128 \
             --setParameter enableTestCommands=1
+
+          # 2) Give mongod a moment to start
           sleep 5
-          mongosh --host localhost:27017 \
-            --eval 'rs.initiate({_id: "rs0", members: [{ _id: 0, host: "localhost:27017" }]})'
+
+          # 3) Initiate the replica set via docker exec
+          docker exec mongo-test \
+            mongosh --eval 'rs.initiate({_id: "rs0", members:[{_id:0, host:"localhost:27017"}]})'
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
