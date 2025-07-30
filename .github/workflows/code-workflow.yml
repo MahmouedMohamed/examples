@@ -80,6 +80,11 @@ jobs:
           --bind_ip_all
           --oplogSize 128
           --setParameter enableTestCommands=1
+        command: >
+          mongod --replSet rs0
+                --bind_ip_all
+                --oplogSize 128
+                --setParameter enableTestCommands=1
 
     steps:
       - name: Checkout Code
