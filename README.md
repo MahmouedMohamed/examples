@@ -1,6 +1,6 @@
-# Laravel Kafka & MongoDB Integration
+# Modular Monolithic Laravel Kafka & MongoDB Integration
 
-A Laravel application demonstrating the integration of Apache Kafka for event streaming and MongoDB for document storage. This project showcases a book management system with real-time event processing.
+A Laravel application that is Modular Monolithic Architecture demonstrating the integration of Apache Kafka for event streaming and MongoDB for document storage. This project showcases a book management system with real-time event processing.
 
 ## 🚀 Features
 
