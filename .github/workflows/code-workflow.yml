@@ -116,6 +116,7 @@ jobs:
 
       - name: Copy .env.testing
         run: |
+          cp .env.example .env
           cp .env.example .env.testing
           echo "DB_CONNECTION=sqlite"            >> .env.testing
           echo "DB_DATABASE=:memory:"            >> .env.testing
