@@ -1,4 +1,4 @@
-name: Ogive Workflow
+name: Example Workflow
 
 on:
   workflow_dispatch:
@@ -19,7 +19,7 @@ jobs:
     timeout-minutes: 30
     steps:
     - name: Checkout Code
-      uses: actions/checkout@v3.3.0
+      uses: actions/checkout@v3
       with:
         fetch-depth: 50
         lfs: true
@@ -31,15 +31,14 @@ jobs:
         tools: composer:v2, vapor-cli
         coverage: none
     - name: Cache Build Artifacts
-      uses: actions/cache@v3.2.2
+      uses: actions/cache@v4
       with:
         path: vendor/
         key: default
     - name: Install Project Dependencies
       run: composer install --prefer-dist --no-ansi --no-interaction --no-progress
     - name: Install composer dependencies
-      run: |
-        composer install --no-scripts
+      run: composer install --no-scripts
     - name: Launch Pint inspection
       run: php ./vendor/bin/pint
     - name: Commit changes
@@ -57,7 +56,7 @@ jobs:
     timeout-minutes: 30
     steps:
     - name: Checkout Code
-      uses: actions/checkout@v3.3.0
+      uses: actions/checkout@v3
       with:
         fetch-depth: 50
         lfs: true
@@ -69,15 +68,14 @@ jobs:
         tools: composer:v2, vapor-cli
         coverage: none
     - name: Cache Build Artifacts
-      uses: actions/cache@v3.2.2
+      uses: actions/cache@v4
       with:
         path: vendor/
         key: default
     - name: Install Project Dependencies
       run: composer install --prefer-dist --no-ansi --no-interaction --no-progress
     - name: Install composer dependencies
-      run: |
-        composer install --no-scripts
+      run: composer install --no-scripts
     - name: Copy .env
       run: php -r "file_exists('.env') || copy('.env.example', '.env');"
     - name: Generate Key
