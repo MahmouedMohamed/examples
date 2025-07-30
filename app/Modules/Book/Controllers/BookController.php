@@ -22,9 +22,10 @@ class BookController
     {
         try {
             $books = $this->bookService->index($request);
+
             return $this->success('Books retrieved successfully', new BookCollectionResource($books));
         } catch (Exception $e) {
-            return $this->error('Failed to retrieve books: ' . $e->getMessage());
+            return $this->error('Failed to retrieve books: '.$e->getMessage());
         }
     }
 
@@ -32,9 +33,10 @@ class BookController
     {
         try {
             $book = $this->bookService->store($request);
+
             return $this->success('Book created successfully', $book);
         } catch (Exception $e) {
-            return $this->error('Failed to create book: ' . $e->getMessage());
+            return $this->error('Failed to create book: '.$e->getMessage());
         }
     }
 }

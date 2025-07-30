@@ -31,7 +31,7 @@ class KafkaRepository implements KafkaRepositoryInterface
         } catch (Exception $e) {
             Log::error('Kafka initialization failed', [
                 'error' => $e->getMessage(),
-                'topics' => config('kafka.topics')
+                'topics' => config('kafka.topics'),
             ]);
 
             throw KafkaException::connectionFailed(config('kafka.brokers', 'localhost:9092'));
@@ -44,7 +44,7 @@ class KafkaRepository implements KafkaRepositoryInterface
             $broker = config('kafka.brokers', 'localhost:9092');
 
             Kafka::publish($broker)
-            ->onTopic($topic)
+                ->onTopic($topic)
                 ->withMessage(new Message(
                     headers: $headers,
                     body: $payload
@@ -54,7 +54,7 @@ class KafkaRepository implements KafkaRepositoryInterface
             Log::info('Kafka message published', [
                 'topic' => $topic,
                 'headers' => $headers,
-                'payload' => $payload
+                'payload' => $payload,
             ]);
 
             return ['success' => true, 'topic' => $topic];
@@ -62,7 +62,7 @@ class KafkaRepository implements KafkaRepositoryInterface
             Log::error('Kafka message publish failed', [
                 'topic' => $topic,
                 'error' => $e->getMessage(),
-                'payload' => $payload
+                'payload' => $payload,
             ]);
 
             throw KafkaException::publishFailed($topic, $e->getMessage());

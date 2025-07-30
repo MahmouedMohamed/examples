@@ -9,9 +9,7 @@ class ModelNotFoundException extends Exception
 {
     use ApiResponse;
 
-    public function __construct()
-    {
-    }
+    public function __construct() {}
 
     public function render()
     {

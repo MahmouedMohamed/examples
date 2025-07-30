@@ -31,6 +31,7 @@ class KafkaException extends Exception
         if ($reason) {
             $message .= ": {$reason}";
         }
+
         return new self($message);
     }
 }
