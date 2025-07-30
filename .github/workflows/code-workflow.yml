@@ -75,8 +75,9 @@ jobs:
           --health-interval=10s
           --health-timeout=5s
           --health-retries=5
+          --entrypoint mongod
           --replSet rs0
-          --bind_ip localhost,mongo
+          --bind_ip_all
           --oplogSize 128
           --setParameter enableTestCommands=1
 
