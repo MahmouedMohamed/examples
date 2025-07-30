@@ -22,4 +22,15 @@ class KafkaRepository implements KafkaRepositoryInterface
                 ->send();
         }
     }
+
+    public function createMessage($topic, $headers, $payload)
+    {
+        Kafka::publish('localhost:9092') // broker address
+            ->onTopic($topic)
+            ->withMessage(new Message(
+                headers: $headers,
+                body: $payload // actual payload
+            ))
+            ->send();
+    }
 }

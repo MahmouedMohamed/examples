@@ -13,4 +13,9 @@ class KafkaService implements KafkaServiceInterface
     {
         return $this->kafkaRepository->initialize();
     }
+
+    public function createMessage($topic, $headers, $payload)
+    {
+        return $this->kafkaRepository->createMessage($topic, $headers, $payload);
+    }
 }
