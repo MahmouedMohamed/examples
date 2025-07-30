@@ -18,45 +18,45 @@ jobs:
       contents: write
     timeout-minutes: 30
     steps:
-    - name: Checkout Code
-      uses: actions/checkout@v3
-      with:
-        fetch-depth: 50
-        lfs: true
+      - name: Checkout Code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 50
+          lfs: true
 
-    - name: Setup PHP
-      uses: shivammathur/setup-php@v2
-      with:
-        php-version: 8.2
-        extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite, gd, redis, memcached
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 8.2
+          extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite, gd, redis, memcached
           tools: composer:v2
-        coverage: none
+          coverage: none
 
-    - name: Install PHP extensions
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y librdkafka-dev
-        sudo pecl install rdkafka
-        echo "extension=rdkafka.so" | sudo tee /etc/php/8.2/cli/conf.d/20-rdkafka.ini
+      - name: Install PHP extensions
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y librdkafka-dev
+          sudo pecl install rdkafka
+          echo "extension=rdkafka.so" | sudo tee /etc/php/8.2/cli/conf.d/20-rdkafka.ini
 
-    - name: Cache Build Artifacts
-      uses: actions/cache@v4
-      with:
-        path: vendor/
-        key: default
+      - name: Cache Build Artifacts
+        uses: actions/cache@v4
+        with:
+          path: vendor/
+          key: default
 
-    - name: Install Project Dependencies
-      run: composer install --prefer-dist --no-ansi --no-interaction --no-progress
+      - name: Install Project Dependencies
+        run: composer install --prefer-dist --no-ansi --no-interaction --no-progress
 
-    - name: Launch Pint inspection
-      run: php ./vendor/bin/pint
+      - name: Launch Pint inspection
+        run: php ./vendor/bin/pint
 
-    - name: Commit changes
-      uses: stefanzweifel/git-auto-commit-action@v4
-      continue-on-error: false
-      with:
-        commit_message: PHP Linting (Pint)
-        skip_fetch: true
+      - name: Commit changes
+        uses: stefanzweifel/git-auto-commit-action@v4
+        continue-on-error: false
+        with:
+          commit_message: PHP Linting (Pint)
+          skip_fetch: true
 
   Test:
     runs-on: ubuntu-latest
@@ -77,35 +77,35 @@ jobs:
           --health-retries=5
 
     steps:
-    - name: Checkout Code
-      uses: actions/checkout@v3
-      with:
-        fetch-depth: 50
-        lfs: true
+      - name: Checkout Code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 50
+          lfs: true
 
-    - name: Setup PHP
-      uses: shivammathur/setup-php@v2
-      with:
-        php-version: 8.2
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 8.2
           extensions: mongodb, dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite, gd, redis, memcached
           tools: composer:v2
-        coverage: none
+          coverage: none
 
-    - name: Install PHP extensions
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y librdkafka-dev
-        sudo pecl install rdkafka
-        echo "extension=rdkafka.so" | sudo tee /etc/php/8.2/cli/conf.d/20-rdkafka.ini
+      - name: Install PHP extensions
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y librdkafka-dev
+          sudo pecl install rdkafka
+          echo "extension=rdkafka.so" | sudo tee /etc/php/8.2/cli/conf.d/20-rdkafka.ini
 
-    - name: Cache Build Artifacts
-      uses: actions/cache@v4
-      with:
-        path: vendor/
-        key: default
+      - name: Cache Build Artifacts
+        uses: actions/cache@v4
+        with:
+          path: vendor/
+          key: default
 
-    - name: Install Project Dependencies
-      run: composer install --prefer-dist --no-ansi --no-interaction --no-progress
+      - name: Install Project Dependencies
+        run: composer install --prefer-dist --no-ansi --no-interaction --no-progress
 
       - name: Copy .env.testing
         run: |
@@ -114,8 +114,8 @@ jobs:
           echo "MONGO_DB_DSN=mongodb://localhost:27017" >> .env.testing
           echo "MONGO_DB_DATABASE=test_db" >> .env.testing
 
-    - name: Generate Key
+      - name: Generate Key
         run: php artisan key:generate --env=testing
 
-    - name: Run Tests
+      - name: Run Tests
         run: php artisan test --env=testing
