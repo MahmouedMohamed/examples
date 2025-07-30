@@ -117,9 +117,10 @@ jobs:
       - name: Copy .env.testing
         run: |
           cp .env.example .env.testing
-          echo "DB_CONNECTION=mongodb" >> .env.testing
-          echo "MONGO_DB_DSN=mongodb://localhost:27017" >> .env.testing
-          echo "MONGO_DB_DATABASE=test_db" >> .env.testing
+          echo "DB_CONNECTION=sqlite"            >> .env.testing
+          echo "DB_DATABASE=:memory:"            >> .env.testing
+          echo "MONGO_DB_DSN=mongodb://localhost:27017"   >> .env.testing
+          echo "MONGO_DB_DATABASE=test_db"                 >> .env.testing
 
       - name: Generate Key
         run: php artisan key:generate --env=testing
