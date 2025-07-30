@@ -6,6 +6,7 @@ use App\Modules\Book\Interfaces\BookServiceInterface;
 use App\Modules\Book\Requests\StoreBookRequest;
 use App\Modules\Book\Resources\BookCollectionResource;
 use App\Traits\ApiResponse;
+use Exception;
 use Illuminate\Http\Request;
 
 class BookController
@@ -19,11 +20,21 @@ class BookController
 
     public function index(Request $request)
     {
-        return $this->success(__('success'), new BookCollectionResource($this->bookService->index($request)));
+        try {
+            $books = $this->bookService->index($request);
+            return $this->success('Books retrieved successfully', new BookCollectionResource($books));
+        } catch (Exception $e) {
+            return $this->error('Failed to retrieve books: ' . $e->getMessage());
+        }
     }
 
     public function store(StoreBookRequest $request)
     {
-        return $this->success(__('success'), $this->bookService->store($request));
+        try {
+            $book = $this->bookService->store($request);
+            return $this->success('Book created successfully', $book);
+        } catch (Exception $e) {
+            return $this->error('Failed to create book: ' . $e->getMessage());
+        }
     }
 }
