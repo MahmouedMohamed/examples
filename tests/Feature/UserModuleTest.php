@@ -7,13 +7,14 @@ use App\Modules\User\Models\User;
 use App\Modules\User\Requests\StoreUserRequest;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class UserModuleTest extends TestCase
 {
     use RefreshDatabase, WithFaker;
 
-    /** @test */
+    #[Test]
     public function it_can_create_a_user_via_api()
     {
         $userData = [
@@ -54,7 +55,7 @@ class UserModuleTest extends TestCase
         ]);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_retrieve_all_users()
     {
         // Create test users
@@ -95,7 +96,7 @@ class UserModuleTest extends TestCase
             ]);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_retrieve_specific_user()
     {
         $user = User::create([
@@ -119,7 +120,7 @@ class UserModuleTest extends TestCase
             ]);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_update_user()
     {
         $user = User::create([
@@ -156,7 +157,7 @@ class UserModuleTest extends TestCase
         ]);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_delete_user()
     {
         $user = User::create([
@@ -177,7 +178,7 @@ class UserModuleTest extends TestCase
         $this->assertDatabaseMissing('users', ['id' => $user->id]);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_activate_user()
     {
         $user = User::create([
@@ -204,7 +205,7 @@ class UserModuleTest extends TestCase
         ]);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_deactivate_user()
     {
         $user = User::create([
@@ -231,7 +232,7 @@ class UserModuleTest extends TestCase
         ]);
     }
 
-    /** @test */
+    #[Test]
     public function it_validates_required_fields_when_creating_user()
     {
         $response = $this->postJson('/api/users', []);
@@ -240,7 +241,7 @@ class UserModuleTest extends TestCase
             ->assertJsonValidationErrors(['name', 'email', 'password']);
     }
 
-    /** @test */
+    #[Test]
     public function it_validates_email_uniqueness()
     {
         User::create([
@@ -260,7 +261,7 @@ class UserModuleTest extends TestCase
             ->assertJsonValidationErrors(['email']);
     }
 
-    /** @test */
+    #[Test]
     public function user_service_can_retrieve_users()
     {
         $userService = app(UserServiceInterface::class);
@@ -279,7 +280,7 @@ class UserModuleTest extends TestCase
         $this->assertEquals('Test User', $users->first()->name);
     }
 
-    /** @test */
+    #[Test]
     public function user_service_can_create_user()
     {
         $userService = app(UserServiceInterface::class);

@@ -8,6 +8,7 @@ use App\Modules\Kafka\Interfaces\KafkaServiceInterface;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Pagination\LengthAwarePaginator;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class BookModuleTest extends TestCase
@@ -46,7 +47,7 @@ class BookModuleTest extends TestCase
         });
     }
 
-    /** @test */
+    #[Test]
     public function it_can_create_a_book_via_api()
     {
         $bookData = [
@@ -69,7 +70,7 @@ class BookModuleTest extends TestCase
             ]);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_retrieve_all_books()
     {
         // Create test books
@@ -105,7 +106,7 @@ class BookModuleTest extends TestCase
             ]);
     }
 
-    /** @test */
+    #[Test]
     public function it_validates_required_fields_when_creating_book()
     {
         $response = $this->postJson('/api/books', []);
@@ -114,7 +115,7 @@ class BookModuleTest extends TestCase
             ->assertJsonValidationErrors(['title', 'author', 'publication_date']);
     }
 
-    /** @test */
+    #[Test]
     public function book_service_can_retrieve_books()
     {
         $bookService = app(BookServiceInterface::class);
@@ -132,7 +133,7 @@ class BookModuleTest extends TestCase
         $this->assertEquals('Test Book', $books->first()->title);
     }
 
-    /** @test */
+    #[Test]
     public function book_service_can_create_book()
     {
         $bookService = app(BookServiceInterface::class);
