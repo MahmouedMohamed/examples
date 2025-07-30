@@ -114,8 +114,8 @@ return [
 
         'mongodb' => [
             'driver' => 'mongodb',
-            'dsn' => env('DB_URI'),
-            'database' => 'sample_mflix',
+            'dsn' => env('DB_URI', 'mongodb://127.0.0.1:27017'),
+            'database' => env('MONGO_DB_DATABASE', 'test_db'),
         ],
 
     ],
