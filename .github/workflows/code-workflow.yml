@@ -126,5 +126,10 @@ jobs:
       - name: Generate Key
         run: php artisan key:generate --env=testing
 
+      - name: Serve the application
+        run: |
+          php artisan serve --env=testing --host=127.0.0.1 --port=8000 &
+          sleep 2
+
       - name: Run Tests
         run: php artisan test --env=testing
