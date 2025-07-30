@@ -30,6 +30,12 @@ jobs:
         extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite, gd, redis, memcached
         tools: composer:v2, vapor-cli
         coverage: none
+    - name: Install PHP extensions
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y librdkafka-dev
+        sudo pecl install rdkafka
+        echo "extension=rdkafka.so" | sudo tee /etc/php/8.2/cli/conf.d/20-rdkafka.ini
     - name: Cache Build Artifacts
       uses: actions/cache@v4
       with:
@@ -67,6 +73,12 @@ jobs:
         extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite, gd, redis, memcached
         tools: composer:v2, vapor-cli
         coverage: none
+    - name: Install PHP extensions
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y librdkafka-dev
+        sudo pecl install rdkafka
+        echo "extension=rdkafka.so" | sudo tee /etc/php/8.2/cli/conf.d/20-rdkafka.ini
     - name: Cache Build Artifacts
       uses: actions/cache@v4
       with:
