@@ -75,9 +75,6 @@ jobs:
           --bind_ip_all
           --oplogSize=128
           --setParameter enableTestCommands=1
-
-          # Healthcheck flags
-          --health-cmd="mongosh --eval \"db.adminCommand('ping')\""
           --health-interval=10s
           --health-timeout=5s
           --health-retries=5
