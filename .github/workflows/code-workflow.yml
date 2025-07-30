@@ -119,6 +119,7 @@ jobs:
           cp .env.example .env.testing
           echo "DB_CONNECTION=sqlite"            >> .env.testing
           echo "DB_DATABASE=:memory:"            >> .env.testing
+          echo "SESSION_DRIVER=array"            >> .env.testing
           echo "MONGO_DB_DSN=mongodb://localhost:27017"   >> .env.testing
           echo "MONGO_DB_DATABASE=test_db"                 >> .env.testing
 
