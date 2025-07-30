@@ -1,8 +1,4 @@
 <?php
 
-use App\Http\Controllers\BookController;
-use App\Http\Controllers\KafkaController;
-use Illuminate\Support\Facades\Route;
-
-Route::apiResource('books', BookController::class);
-Route::post('/kafka-initialize', KafkaController::class);
+require __DIR__.'/../app/Modules/Book/Routes/api.php';
+require __DIR__.'/../app/Modules/Kafka/Routes/api.php';

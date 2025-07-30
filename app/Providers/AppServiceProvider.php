@@ -2,14 +2,8 @@
 
 namespace App\Providers;
 
-use App\Interfaces\BookRepositoryInterface;
-use App\Interfaces\BookServiceInterface;
-use App\Interfaces\KafkaRepositoryInterface;
-use App\Interfaces\KafkaServiceInterface;
-use App\Repositories\BookRepository;
-use App\Repositories\KafkaRepository;
-use App\Services\BookService;
-use App\Services\KafkaService;
+use App\Modules\Book\Providers\BookServiceProvider;
+use App\Modules\Kafka\Providers\KafkaServiceProvider;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -19,10 +13,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        $this->app->bind(BookServiceInterface::class, BookService::class);
-        $this->app->bind(BookRepositoryInterface::class, BookRepository::class);
-        $this->app->bind(KafkaServiceInterface::class, KafkaService::class);
-        $this->app->bind(KafkaRepositoryInterface::class, KafkaRepository::class);
+        // Register module service providers
+        $this->app->register(BookServiceProvider::class);
+        $this->app->register(KafkaServiceProvider::class);
     }
 
     /**
