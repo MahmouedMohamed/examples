@@ -70,21 +70,8 @@ jobs:
         image: mongo:5
         ports:
           - 27017:27017
-        options: >-
-          --health-cmd="mongosh --eval 'db.adminCommand(\"ping\")'"
-          --health-interval=10s
-          --health-timeout=5s
-          --health-retries=5
-          --entrypoint mongod
-          --replSet rs0
-          --bind_ip_all
-          --oplogSize 128
-          --setParameter enableTestCommands=1
-        command: >
-          mongod --replSet rs0
-                --bind_ip_all
-                --oplogSize 128
-                --setParameter enableTestCommands=1
+        options: --health-cmd="mongosh --eval 'db.adminCommand(\"ping\")'" --health-interval=10s --health-timeout=5s --health-retries=5
+        command: mongod --replSet rs0 --bind_ip_all --oplogSize 128 --setParameter enableTestCommands=1
 
     steps:
       - name: Checkout Code
