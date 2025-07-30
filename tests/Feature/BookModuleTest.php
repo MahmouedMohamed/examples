@@ -8,7 +8,6 @@ use App\Modules\Kafka\Interfaces\KafkaServiceInterface;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Pagination\LengthAwarePaginator;
-use Mockery;
 use Tests\TestCase;
 
 class BookModuleTest extends TestCase
@@ -26,25 +25,25 @@ class BookModuleTest extends TestCase
 
         $this->mock(BookServiceInterface::class, function ($mock) {
             $fakeBooks = new LengthAwarePaginator(
-    collect([
-        new Book([
-            'id' => 'Test ID',
-            'title' => 'Test Book',
-            'author' => 'Test Author',
-            'publication_date' => '2024-01-01',
-        ])
-    ]),
-    1, // total items
-    15 // per page
-);
-        $mock->shouldReceive('index')->andReturn($fakeBooks);
-        $mock->shouldReceive('store')->andReturn(new Book([
-            'id' => 'Test ID',
-            'title' => 'New Book',
-            'author' => 'New Author',
-            'publication_date' => '2024-01-01',
-        ]));
-    });
+                collect([
+                    new Book([
+                        'id' => 'Test ID',
+                        'title' => 'Test Book',
+                        'author' => 'Test Author',
+                        'publication_date' => '2024-01-01',
+                    ]),
+                ]),
+                1, // total items
+                15 // per page
+            );
+            $mock->shouldReceive('index')->andReturn($fakeBooks);
+            $mock->shouldReceive('store')->andReturn(new Book([
+                'id' => 'Test ID',
+                'title' => 'New Book',
+                'author' => 'New Author',
+                'publication_date' => '2024-01-01',
+            ]));
+        });
     }
 
     /** @test */

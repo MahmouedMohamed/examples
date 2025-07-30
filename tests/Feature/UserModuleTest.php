@@ -285,16 +285,16 @@ class UserModuleTest extends TestCase
         $userService = app(UserServiceInterface::class);
 
         $request = StoreUserRequest::create('/fake', 'POST', [
-    'name' => 'New User',
-    'email' => 'new@example.com',
-    'password' => 'password123',
-    'is_active' => true,
-]);
+            'name' => 'New User',
+            'email' => 'new@example.com',
+            'password' => 'password123',
+            'is_active' => true,
+        ]);
 
-// Make Laravel validate it like in a real request
-$request->setContainer(app())->validateResolved();
+        // Make Laravel validate it like in a real request
+        $request->setContainer(app())->validateResolved();
 
-$user = $userService->store($request);
+        $user = $userService->store($request);
 
         $this->assertEquals('New User', $user->name);
         $this->assertEquals('new@example.com', $user->email);
