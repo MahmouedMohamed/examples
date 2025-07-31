@@ -3,6 +3,8 @@
 namespace Tests;
 
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
+use Stancl\Tenancy\Middleware\InitializeTenancyByDomain;
+use Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains;
 
 abstract class TestCase extends BaseTestCase
 {
@@ -15,6 +17,11 @@ abstract class TestCase extends BaseTestCase
                 'driver' => 'sqlite',
                 'database' => ':memory:',
                 'prefix' => '',
+            ]);
+
+            $this->withoutMiddleware([
+                InitializeTenancyByDomain::class,
+                PreventAccessFromCentralDomains::class,
             ]);
         }
     }
