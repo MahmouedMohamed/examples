@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Modules\Book\Providers\BookServiceProvider;
 use App\Modules\Kafka\Providers\KafkaServiceProvider;
 use App\Modules\User\Providers\UserServiceProvider;
+use App\Modules\Tenant\Providers\TenancyServiceProvider;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -18,6 +19,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->register(BookServiceProvider::class);
         $this->app->register(KafkaServiceProvider::class);
         $this->app->register(UserServiceProvider::class);
+        $this->app->register(TenancyServiceProvider::class);
     }
 
     /**
