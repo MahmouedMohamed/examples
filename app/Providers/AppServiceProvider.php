@@ -4,8 +4,8 @@ namespace App\Providers;
 
 use App\Modules\Book\Providers\BookServiceProvider;
 use App\Modules\Kafka\Providers\KafkaServiceProvider;
-use App\Modules\User\Providers\UserServiceProvider;
 use App\Modules\Tenant\Providers\TenancyServiceProvider;
+use App\Modules\User\Providers\UserServiceProvider;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
