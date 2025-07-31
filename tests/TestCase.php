@@ -12,17 +12,20 @@ abstract class TestCase extends BaseTestCase
     {
         parent::setUp();
 
+            $this->withoutMiddleware([
+                InitializeTenancyByDomain::class,
+                PreventAccessFromCentralDomains::class,
+            ]);
+
         if (app()->environment('testing')) {
             config()->set('database.connections.mongodb', [
                 'driver' => 'sqlite',
                 'database' => ':memory:',
                 'prefix' => '',
             ]);
+    config()->set('session.driver', 'array');
 
-            $this->withoutMiddleware([
-                InitializeTenancyByDomain::class,
-                PreventAccessFromCentralDomains::class,
-            ]);
+    config()->set('cache.default', 'array');
         }
     }
 }
