@@ -12,10 +12,10 @@ abstract class TestCase extends BaseTestCase
     {
         parent::setUp();
 
-            $this->withoutMiddleware([
-                InitializeTenancyByDomain::class,
-                PreventAccessFromCentralDomains::class,
-            ]);
+        $this->withoutMiddleware([
+            InitializeTenancyByDomain::class,
+            PreventAccessFromCentralDomains::class,
+        ]);
 
         if (app()->environment('testing')) {
             config()->set('database.connections.mongodb', [
@@ -23,9 +23,9 @@ abstract class TestCase extends BaseTestCase
                 'database' => ':memory:',
                 'prefix' => '',
             ]);
-    config()->set('session.driver', 'array');
+            config()->set('session.driver', 'array');
 
-    config()->set('cache.default', 'array');
+            config()->set('cache.default', 'array');
         }
     }
 }
