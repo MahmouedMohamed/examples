@@ -28,7 +28,7 @@ class BookModuleTest extends TestCase
             $fakeBooks = new LengthAwarePaginator(
                 collect([
                     new Book([
-                        'id' => 'Test ID',
+                        'id' => 'Test-ID',
                         'title' => 'Test Book',
                         'author' => 'Test Author',
                         'publication_date' => '2024-01-01',
@@ -37,13 +37,17 @@ class BookModuleTest extends TestCase
                 1, // total items
                 15 // per page
             );
-            $mock->shouldReceive('index')->andReturn($fakeBooks);
-            $mock->shouldReceive('store')->andReturn(new Book([
-                'id' => 'Test ID',
-                'title' => 'New Book',
-                'author' => 'New Author',
-                'publication_date' => '2024-01-01',
-            ]));
+
+            $mock->shouldReceive('index')
+                ->andReturn($fakeBooks);
+
+            $mock->shouldReceive('store')
+                ->andReturn(new Book([
+                    'id' => 'Test-ID',
+                    'title' => 'New Book',
+                    'author' => 'New Author',
+                    'publication_date' => '2024-01-01',
+                ]));
         });
     }
 
@@ -73,19 +77,6 @@ class BookModuleTest extends TestCase
     #[Test]
     public function it_can_retrieve_all_books()
     {
-        // Create test books
-        Book::create([
-            'title' => 'Book 1',
-            'author' => 'Author 1',
-            'publication_date' => '2024-01-01',
-        ]);
-
-        Book::create([
-            'title' => 'Book 2',
-            'author' => 'Author 2',
-            'publication_date' => '2024-01-02',
-        ]);
-
         $response = $this->getJson('/api/books');
 
         $response->assertStatus(200)
@@ -118,15 +109,7 @@ class BookModuleTest extends TestCase
     #[Test]
     public function book_service_can_retrieve_books()
     {
-        $bookService = app(BookServiceInterface::class);
-
-        // Create test book
-        Book::create([
-            'title' => 'Test Book',
-            'author' => 'Test Author',
-            'publication_date' => '2024-01-01',
-        ]);
-
+        $bookService = $this->app->make(BookServiceInterface::class);
         $books = $bookService->index(request());
 
         $this->assertCount(1, $books);
@@ -136,7 +119,7 @@ class BookModuleTest extends TestCase
     #[Test]
     public function book_service_can_create_book()
     {
-        $bookService = app(BookServiceInterface::class);
+        $bookService = $this->app->make(BookServiceInterface::class);
 
         $request = request()->merge([
             'title' => 'New Book',
