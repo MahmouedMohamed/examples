@@ -9,6 +9,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
+use function Pest\Stressless\stress;
 
 class UserModuleTest extends TestCase
 {
@@ -300,4 +301,40 @@ class UserModuleTest extends TestCase
         $this->assertEquals('New User', $user->name);
         $this->assertEquals('new@example.com', $user->email);
     }
+
+    #[Test]
+public function it_has_a_fast_response_time_for_users_endpoint()
+{
+    $endpoint = "http://localhost:8000/api/users";
+
+    $concurrencyLevels = [5, 10, 20];
+    $thresholdMs = 300;
+
+    fwrite(STDOUT, "\n[INFO] Starting stress test for: {$endpoint}\n");
+
+    foreach ($concurrencyLevels as $concurrency) {
+        fwrite(STDOUT, "\n[INFO] Testing with {$concurrency} concurrent requests...\n");
+
+        $result = stress($endpoint)->concurrency($concurrency)->duration(10)->run();
+
+$totalRequests = $result->requests()->count();
+
+        $durations = $result->requests()->duration();
+        $min = $durations->min();
+        $max = $durations->max();
+        $median = $durations->med();
+        $mean = $durations->avg();
+
+    fwrite(STDOUT, "\n[INFO] Total Requests: {$totalRequests}\n");
+        fwrite(STDOUT, sprintf(
+            "[RESULT] Concurrency: %d | Min: %d ms | Max: %d ms | Median: %d ms | Mean: %d ms\n",
+            $concurrency, $min, $max, $median, $mean
+        ));
+
+        expect($median)
+            ->toBeLessThan($thresholdMs)
+            ->and($max)
+            ->toBeLessThan($thresholdMs * 3); // Allow some spikes
+    }
+}
 }
